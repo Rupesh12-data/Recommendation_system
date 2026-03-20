@@ -1,19 +1,17 @@
-
 import streamlit as st
 import pandas as pd
 import pickle
 import requests
 import os
-import gdown 
+import gdown
 
 st.title('Movie Recommendation System')
 
-# Download large files from Google Drive if not present
 
+if not os.path.exists("similarity.pkl") or os.path.getsize("similarity.pkl") < 1000000:
+    with st.spinner("Downloading similarity file, please wait..."):
+        gdown.download("https://drive.google.com/uc?id=1OBs-6uB-wyW-rHogZQDIVViEDVGHpCwb", "similarity.pkl", quiet=False, fuzzy=True)
 
-if not os.path.exists("similarity.pkl"):
-    gdown.download("https://drive.google.com/uc?id=1OBs-6uB-wyW-rHogZQDIVViEDVGHpCwb", "similarity.pkl", quiet=False)
-    
 mov = pickle.load(open('movve.pkl', 'rb'))
 sim = pickle.load(open('similarity.pkl', 'rb'))
 
@@ -50,11 +48,10 @@ option = st.selectbox('Movies list', mov['title'].values)
 
 if st.button('Search'):
     recommendations = recommend(option)
-
     posters = [fetch_poster(title) for title in recommendations]
     
     cols = st.columns(len(recommendations))
     for col, title, poster in zip(cols, recommendations, posters):
         with col:
-            st.image(poster, width=150) 
+            st.image(poster, width=150)
             st.caption(title)
