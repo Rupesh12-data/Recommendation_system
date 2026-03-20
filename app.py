@@ -12,8 +12,8 @@ st.title('Movie Recommendation System')
 
 
 if not os.path.exists("similarity.pkl"):
-    gdown.download("https://drive.google.com/file/d/1OBs-6uB-wyW-rHogZQDIVViEDVGHpCwb/view?usp=drive_link", "similarity.pkl", quiet=False)
-
+    gdown.download("https://drive.google.com/uc?id=1OBs-6uB-wyW-rHogZQDIVViEDVGHpCwb", "similarity.pkl", quiet=False)
+    
 mov = pickle.load(open('movve.pkl', 'rb'))
 sim = pickle.load(open('similarity.pkl', 'rb'))
 
